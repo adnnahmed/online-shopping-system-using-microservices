@@ -1,5 +1,7 @@
 package service.inventoryservice.service;
 
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import service.inventoryservice.dto.InventoryResponse;
 import service.inventoryservice.repository.InventoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +12,18 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class InventoryService {
 
     private final InventoryRepository inventoryRepository;
 
     @Transactional(readOnly = true)
+//    @SneakyThrows
     public List<InventoryResponse> isInStock(List<String> skuCode) {
+        //Implementing Timeout
+//        log.info("Started waiting.");
+//        Thread.sleep(10000);
+//        log.info("Stopped waiting.");
         return inventoryRepository.findBySkuCodeIn(skuCode).stream()
                 .map(inventory ->
                     InventoryResponse.builder()
